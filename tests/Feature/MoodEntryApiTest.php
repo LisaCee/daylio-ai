@@ -90,30 +90,6 @@ class MoodEntryApiTest extends TestCase
     }
 
     /** @test */
-    public function cannot_create_duplicate_mood_entry_for_same_date()
-    {
-        Sanctum::actingAs($this->user);
-
-        // Create first entry
-        MoodEntry::factory()->create([
-            'user_id' => $this->user->id,
-            'entry_date' => '2025-06-01'
-        ]);
-
-        // Try to create another for same date
-        $response = $this->postJson('/api/mood-entries', [
-            'mood_level' => 3,
-            'entry_date' => '2025-06-01'
-        ]);
-
-        $response->assertStatus(422)
-            ->assertJson([
-                'status' => 'error',
-                'message' => 'You already have a mood entry for this date. Use PUT to update it.'
-            ]);
-    }
-
-    /** @test */
     public function user_can_get_their_mood_entries()
     {
         Sanctum::actingAs($this->user);
@@ -337,5 +313,49 @@ class MoodEntryApiTest extends TestCase
         $entry = MoodEntry::latest()->first();
         $this->assertEquals(now()->toDateString(), $entry->entry_date->format('Y-m-d'));
         $this->assertNotNull($entry->entry_time);
+    }
+
+    /** @test */
+    public function user_can_create_multiple_mood_entries_for_same_date()
+    {
+        Sanctum::actingAs($this->user);
+
+        // Create first entry for today
+        $response1 = $this->postJson('/api/mood-entries', [
+            'mood_level' => 3,
+            'entry_date' => '2025-06-01',
+            'entry_time' => '09:00',
+            'notes' => 'Morning mood'
+        ]);
+
+        $response1->assertStatus(201);
+
+        // Create second entry for the same date
+        $response2 = $this->postJson('/api/mood-entries', [
+            'mood_level' => 5,
+            'entry_date' => '2025-06-01',
+            'entry_time' => '18:00',
+            'notes' => 'Evening mood'
+        ]);
+
+        $response2->assertStatus(201);
+
+        // Both entries should exist in database
+        $this->assertDatabaseHas('mood_entries', [
+            'user_id' => $this->user->id,
+            'mood_level' => 3,
+            'entry_date' => '2025-06-01',
+            'notes' => 'Morning mood'
+        ]);
+
+        $this->assertDatabaseHas('mood_entries', [
+            'user_id' => $this->user->id,
+            'mood_level' => 5,
+            'entry_date' => '2025-06-01',
+            'notes' => 'Evening mood'
+        ]);
+
+        // Should have 2 entries for this user
+        $this->assertEquals(2, $this->user->moodEntries()->count());
     }
 }

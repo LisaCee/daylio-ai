@@ -67,19 +67,6 @@ class MoodEntryController extends Controller
         $validated['entry_date'] = $validated['entry_date'] ?? now()->toDateString();
         $validated['entry_time'] = $validated['entry_time'] ?? now()->format('H:i');
 
-        // Check for duplicate entry on same date
-        $existingEntry = $request->user()->moodEntries()
-            ->whereDate('entry_date', $validated['entry_date'])
-            ->first();
-
-        if ($existingEntry) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'You already have a mood entry for this date. Use PUT to update it.',
-                'existing_entry' => $existingEntry
-            ], 422);
-        }
-
         $moodEntry = MoodEntry::create($validated);
 
         return response()->json([
@@ -137,22 +124,6 @@ class MoodEntryController extends Controller
             'activities' => 'nullable|array',
             'activities.*' => 'string|max:100',
         ]);
-
-        // If changing date, check for conflicts
-        if (isset($validated['entry_date']) && $validated['entry_date'] !== $moodEntry->entry_date->format('Y-m-d')) {
-            $conflictEntry = $request->user()->moodEntries()
-                ->whereDate('entry_date', $validated['entry_date'])
-                ->where('id', '!=', $moodEntry->id)
-                ->first();
-
-            if ($conflictEntry) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Another mood entry already exists for this date',
-                    'conflict_entry' => $conflictEntry
-                ], 422);
-            }
-        }
 
         $moodEntry->update($validated);
 
