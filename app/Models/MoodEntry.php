@@ -27,7 +27,7 @@ class MoodEntry extends Model
      * The attributes that should be cast.
      */
     protected $casts = [
-        'entry_date' => 'date',
+        'entry_date' => 'date:Y-m-d',
         'entry_time' => 'datetime:H:i',
         'activities' => 'array',
     ];
@@ -45,7 +45,23 @@ class MoodEntry extends Model
      */
     public function getMoodDescriptionAttribute(): string
     {
-        return match ($this->mood_level) {
+        return self::getMoodDescription($this->mood_level);
+    }
+
+    /**
+     * Get the mood emoji.
+     */
+    public function getMoodEmojiAttribute(): string
+    {
+        return self::getMoodEmoji($this->mood_level);
+    }
+
+    /**
+     * Static method to get mood description by level.
+     */
+    public static function getMoodDescription(int $level): string
+    {
+        return match ($level) {
             1 => 'Very Bad',
             2 => 'Bad',
             3 => 'Neutral',
@@ -56,11 +72,11 @@ class MoodEntry extends Model
     }
 
     /**
-     * Get the mood emoji.
+     * Static method to get mood emoji by level.
      */
-    public function getMoodEmojiAttribute(): string
+    public static function getMoodEmoji(int $level): string
     {
-        return match ($this->mood_level) {
+        return match ($level) {
             1 => '😞',
             2 => '😔',
             3 => '😐',
