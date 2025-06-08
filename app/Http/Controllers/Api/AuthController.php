@@ -21,12 +21,14 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'timezone' => 'nullable|string|timezone',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'timezone' => $request->timezone ?? $this->detectTimezone($request),
         ]);
 
         $token = $user->createToken('auth-token')->plainTextToken;
@@ -37,6 +39,7 @@ class AuthController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'timezone' => $user->timezone,
                 'created_at' => $user->created_at,
             ],
             'token' => $token,
@@ -68,6 +71,7 @@ class AuthController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'timezone' => $user->timezone,
                 'latest_mood' => $user->latestMoodEntry()?->mood_emoji ?? null,
                 'average_mood' => round($user->averageMoodLevel(), 1),
                 'total_entries' => $user->moodEntries()->count(),
@@ -100,6 +104,7 @@ class AuthController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'timezone' => $user->timezone,
                 'latest_mood' => $user->latestMoodEntry()?->mood_emoji ?? null,
                 'average_mood' => round($user->averageMoodLevel(), 1),
                 'total_entries' => $user->moodEntries()->count(),
@@ -118,9 +123,10 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
+            'timezone' => 'sometimes|string|timezone',
         ]);
 
-        $user->update($request->only(['name', 'email']));
+        $user->update($request->only(['name', 'email', 'timezone']));
 
         return response()->json([
             'message' => 'Profile updated successfully',
@@ -128,6 +134,7 @@ class AuthController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'timezone' => $user->timezone,
                 'latest_mood' => $user->latestMoodEntry()?->mood_emoji ?? null,
                 'average_mood' => round($user->averageMoodLevel(), 1),
                 'total_entries' => $user->moodEntries()->count(),
@@ -163,5 +170,19 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Password changed successfully. Please login again.',
         ]);
+    }
+
+    /**
+     * Detect user's timezone from request headers or return default.
+     */
+    private function detectTimezone(Request $request): string
+    {
+        // Try header first (frontend can send this)
+        if ($timezone = $request->header('X-Timezone')) {
+            return $timezone;
+        }
+        
+        // Fallback to app default
+        return config('app.timezone', 'UTC');
     }
 }

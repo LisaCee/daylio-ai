@@ -65,7 +65,7 @@ class MoodEntryController extends Controller
         // Set defaults
         $validated['user_id'] = $request->user()->id;
         $validated['entry_date'] = $validated['entry_date'] ?? now()->toDateString();
-        $validated['entry_time'] = $validated['entry_time'] ?? now()->format('H:i');
+        $validated['entry_time'] = $validated['entry_time'] ?? now($request->user()->getTimezone())->format('H:i');
 
         $moodEntry = MoodEntry::create($validated);
 

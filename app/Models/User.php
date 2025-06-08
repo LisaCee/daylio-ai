@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'timezone',
     ];
 
     /**
@@ -70,5 +71,26 @@ class User extends Authenticatable
     public function averageMoodLevel(): float
     {
         return $this->moodEntries()->avg('mood_level') ?? 0;
+    }
+
+    /**
+     * Get the user's timezone preference.
+     */
+    public function getTimezone(): string
+    {
+        return $this->timezone ?? config('app.timezone', 'UTC');
+    }
+
+    /**
+     * Convert a time string to the user's timezone for display.
+     */
+    public function convertTimeToUserTimezone(string $time, string $date = null): string
+    {
+        $date = $date ?? now()->toDateString();
+        $datetime = $date . ' ' . $time;
+        
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i', $datetime, 'UTC')
+            ->setTimezone($this->getTimezone())
+            ->format('H:i');
     }
 }
