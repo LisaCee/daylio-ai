@@ -31,11 +31,11 @@ body {
     --error: #ef4444;
     
     /* Mood-specific accent colors */
-    --accent-orange: #fb7328;
-    --accent-green: #3a8f2c;
-    --accent-purple: #693690;
-    --accent-blue: #294aa4;
-    --accent-gray: #464d5c;
+    --accent-orange: #ff9800;
+    --accent-green: #4caf50;
+    --accent-purple: #9c27b0;
+    --accent-blue: #2196f3;
+    --accent-gray: #9e9e9e;
     
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -70,6 +70,11 @@ body {
         --text-secondary: #cbd5e1;
         --text-muted: #64748b;
         --accent-light: #312e81;
+        --accent-gray: #bdbdbd;
+        --accent-orange: #ffb74d;
+        --accent-green: #81c784;
+        --accent-purple: #ba68c8;
+        --accent-blue: #64b5f6;
     }
 }
 
@@ -118,17 +123,22 @@ body {
     margin-bottom: var(--space-xl);
 }
 
-.note-section h3 {
+.note-label {
     margin-bottom: var(--space-md);
+    display: block;
+}
+
+.note-label h2 {
     color: var(--text-primary);
     font-size: 1.125rem;
     font-weight: 600;
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+    margin: 0;
 }
 
-.note-section h3::before {
+.note-label h2::before {
     content: "📝";
     font-size: 1.25rem;
 }
