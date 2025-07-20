@@ -60,8 +60,11 @@ export default function App() {
                     />
                     
                     <div className="note-section">
-                        <h3>Note (optional)</h3>
+                        <label htmlFor="note-input" className="note-label">
+                            <h2>Note (optional)</h2>
+                        </label>
                         <textarea
+                            id="note-input"
                             value={note}
                             onChange={(e) => setNote(e.target.value)}
                             placeholder="How was your day?"
