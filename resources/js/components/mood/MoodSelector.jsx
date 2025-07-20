@@ -1,46 +1,40 @@
 import React from 'react';
 import './styles.css';
 
-// Export moods array for use in other components
 export const moods = [
-    { id: 0, name: 'bad', color: 'accent-gray', icon: 'fa-regular fa-face-tired' },
-    { id: 1, name: 'poor', color: 'accent-blue', icon: 'fa-regular fa-face-frown' },
-    { id: 2, name: 'meh', color: 'accent-purple', icon: 'fa-regular fa-face-meh' },
-    { id: 3, name: 'good', color: 'accent-green', icon: 'fa-regular fa-face-smile' },
-    { id: 4, name: 'great', color: 'accent-orange', icon: 'fa-regular fa-face-laugh-beam' }
+    { id: 0, name: 'Terrible', icon: 'fa-regular fa-face-tired' },
+    { id: 1, name: 'Bad', icon: 'fa-regular fa-face-frown' },
+    { id: 2, name: 'Okay', icon: 'fa-regular fa-face-meh' },
+    { id: 3, name: 'Good', icon: 'fa-regular fa-face-smile' },
+    { id: 4, name: 'Great', icon: 'fa-regular fa-face-laugh-beam' }
 ];
 
-// Export getColor function for use in other components
-export const getColor = (moodLevel) => {
-    const mood = moods.find(m => m.id === moodLevel);
-    return mood ? mood.color : 'accent-gray';
-};
-
-export default function MoodSelector({ selectedMood, setSelectedMood }) {
+export default function MoodSelector({ selectedMood, onMoodSelect }) {
     return (
-        <fieldset className="mood-section">
-            <legend className="section-legend">How are you feeling?</legend>
-            <div className="mood-selector">
+        <div className="moods-section">
+            <h3>How are you feeling?</h3>
+            <div className="moods-grid">
                 {moods.map(mood => (
-                    <div key={mood.id} className="mood-option">
+                    <label
+                        key={mood.id}
+                        className={`mood-label ${selectedMood === mood.id ? 'selected' : ''}`}
+                        data-mood={mood.id}
+                    >
                         <input
                             type="radio"
-                            id={`mood-${mood.id}`}
                             name="mood"
                             value={mood.id}
                             checked={selectedMood === mood.id}
-                            onChange={() => setSelectedMood(mood.id)}
-                            className="mood-input"
+                            onChange={() => onMoodSelect(mood.id)}
+                            style={{ display: 'none' }}
                         />
-                        <label 
-                            htmlFor={`mood-${mood.id}`}
-                            className={`mood-label ${selectedMood === mood.id ? 'selected' : ''}`}
-                        >
-                            <i className={`mood-icon ${mood.icon}`}></i>
-                        </label>
-                    </div>
+                        <span className="mood-icon">
+                            <i className={mood.icon}></i>
+                        </span>
+                        <span className="mood-name">{mood.name}</span>
+                    </label>
                 ))}
             </div>
-        </fieldset>
+        </div>
     );
 } 
