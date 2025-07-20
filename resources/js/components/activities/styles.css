@@ -3,7 +3,7 @@
     margin-bottom: var(--space-xl);
 }
 
-.activities-section h3 {
+.activities-section h2 {
     margin-bottom: var(--space-lg);
     color: var(--text-primary);
     font-size: 1.125rem;
@@ -13,8 +13,7 @@
     gap: var(--space-sm);
 }
 
-.activities-section h3::before {
-    content: "🎯";
+.activities-section h2::before {
     font-size: 1.25rem;
 }
 

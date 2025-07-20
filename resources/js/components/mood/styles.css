@@ -1,9 +1,11 @@
 /* Mood Selector Styles */
 .moods-section {
     margin-bottom: var(--space-xl);
+    border: none;
+    padding: 0;
 }
 
-.moods-section h3 {
+.moods-legend {
     margin-bottom: var(--space-lg);
     color: var(--text-primary);
     font-size: 1.125rem;
@@ -13,8 +15,14 @@
     gap: var(--space-sm);
 }
 
-.moods-section h3::before {
-    content: "😊";
+.moods-legend h2 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.moods-legend::before {
     font-size: 1.25rem;
 }
 
@@ -119,8 +127,33 @@
     color: var(--accent-orange);
 }
 
+/* Mood name colors to match icons */
+.mood-label[data-mood="0"] .mood-name {
+    color: var(--accent-gray);
+}
+
+.mood-label[data-mood="1"] .mood-name {
+    color: var(--accent-blue);
+}
+
+.mood-label[data-mood="2"] .mood-name {
+    color: var(--accent-purple);
+}
+
+.mood-label[data-mood="3"] .mood-name {
+    color: var(--accent-green);
+}
+
+.mood-label[data-mood="4"] .mood-name {
+    color: var(--accent-orange);
+}
+
 /* Selected state overrides */
 .mood-label.selected .mood-icon {
+    color: white !important;
+}
+
+.mood-label.selected .mood-name {
     color: white !important;
 }
 
