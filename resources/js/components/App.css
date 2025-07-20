@@ -1,0 +1,303 @@
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Color variables matching your original theme */
+:root {
+    /* Light mode colors (default) */
+    --background: #eeeeee;
+    --surface: #fdfdfd;
+    --border: #bebebe;
+    --text-primary: #151515;
+    --accent: #989898;
+    --accent-orange: #fb7328;
+    --accent-orange-dark: #e16724;
+    --accent-green: #3a8f2c;
+    --accent-green-dark: #348027;
+    --accent-purple: #693690;
+    --accent-purple-dark: #5e3081;
+    --accent-blue: #294aa4;
+    --accent-blue-dark: #244293;
+    --accent-gray: #464d5c;
+    --accent-gray-dark: #3f4552;
+}
+
+/* Dark mode colors */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #040404;
+        --surface: #ffffff10;
+        --border: #ffffff20;
+        --text-primary: #fffbee;
+        --accent: #d6d6d6;
+    }
+}
+
+/* App container */
+.app {
+    min-height: 100vh;
+    background-color: var(--background);
+    color: var(--text-primary);
+    padding: 40px 20px;
+}
+
+/* Main content */
+.main {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Form styles */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.page-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.entry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* Activity section */
+.activity-section {
+    border: none;
+    padding: 0;
+}
+
+.section-legend {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+}
+
+.activity-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.activity-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.activity-input {
+    display: none;
+}
+
+.activity-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.activity-label:hover {
+    background-color: var(--surface);
+}
+
+.activity-label.selected {
+    background-color: var(--accent-purple);
+    color: white;
+}
+
+.activity-icon {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+.activity-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.submit-btn {
+    margin-top: 24px;
+    font-size: 1.1rem;
+    padding: 16px 32px;
+}
+
+/* Entries grid */
+.entries-container {
+    margin-top: 40px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-state h2 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.empty-state p {
+    color: var(--accent);
+    margin-bottom: 32px;
+}
+
+.entries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+/* Entry cards */
+.entry-card {
+    background-color: var(--surface);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.entry-header {
+    padding: 12px 24px;
+    color: white;
+}
+
+.entry-header.bg-accent-gray {
+    background-color: var(--accent-gray);
+}
+
+.entry-header.bg-accent-blue {
+    background-color: var(--accent-blue);
+}
+
+.entry-header.bg-accent-purple {
+    background-color: var(--accent-purple);
+}
+
+.entry-header.bg-accent-green {
+    background-color: var(--accent-green);
+}
+
+.entry-header.bg-accent-orange {
+    background-color: var(--accent-orange);
+}
+
+.entry-date {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.entry-body {
+    padding: 16px 24px;
+}
+
+.entry-mood {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.mood-display {
+    font-size: 1.5rem;
+    /* Font Awesome color inheritance */
+    color: inherit;
+    fill: currentColor;
+}
+
+/* Mood-specific colors for entry cards */
+.mood-display.mood-0 {
+    color: var(--accent-gray);
+}
+
+.mood-display.mood-1 {
+    color: var(--accent-blue);
+}
+
+.mood-display.mood-2 {
+    color: var(--accent-purple);
+}
+
+.mood-display.mood-3 {
+    color: var(--accent-green);
+}
+
+.mood-display.mood-4 {
+    color: var(--accent-orange);
+}
+
+/* Font Awesome specific styling for mood display */
+.mood-display::before {
+    color: inherit;
+}
+
+.entry-time {
+    font-size: 0.75rem;
+    color: var(--accent);
+}
+
+.entry-activities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.activity-tag {
+    font-size: 1rem;
+    padding: 4px 8px;
+    background-color: var(--background);
+    border-radius: 6px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .app {
+        padding: 20px 10px;
+    }
+    
+    .activity-grid {
+        justify-content: center;
+    }
+    
+    .entries-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .page-heading {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .activity-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+} 
