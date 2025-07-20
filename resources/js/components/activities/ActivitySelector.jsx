@@ -15,7 +15,7 @@ export const activities = [
 export default function ActivitySelector({ selectedActivities, onActivityToggle }) {
     return (
         <div className="activities-section">
-            <h3>Activities</h3>
+            <h2>Activities</h2>
             <div className="activities-grid">
                 {activities.map(activity => (
                     <label
