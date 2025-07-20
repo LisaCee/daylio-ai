@@ -1,0 +1,94 @@
+/* Mood section styles */
+.mood-section {
+    border: none;
+    padding: 0;
+}
+
+.section-legend {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+}
+
+.mood-selector {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.mood-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.mood-input {
+    display: none;
+}
+
+.mood-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.mood-label:hover {
+    transform: scale(1.1);
+}
+
+.mood-label.selected {
+    transform: scale(1.1);
+}
+
+.mood-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    /* Font Awesome color inheritance */
+    color: inherit;
+    fill: currentColor;
+}
+
+/* Mood-specific colors */
+.mood-label[for="mood-0"] .mood-icon {
+    color: var(--accent-gray);
+}
+
+.mood-label[for="mood-1"] .mood-icon {
+    color: var(--accent-blue);
+}
+
+.mood-label[for="mood-2"] .mood-icon {
+    color: var(--accent-purple);
+}
+
+.mood-label[for="mood-3"] .mood-icon {
+    color: var(--accent-green);
+}
+
+.mood-label[for="mood-4"] .mood-icon {
+    color: var(--accent-orange);
+}
+
+/* Font Awesome specific styling */
+.mood-icon::before {
+    color: inherit;
+}
+
+/* Responsive mood selector */
+@media (max-width: 768px) {
+    .mood-selector {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .mood-selector {
+        flex-direction: column;
+        align-items: center;
+    }
+} 
