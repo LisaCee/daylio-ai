@@ -1,0 +1,224 @@
+# Daylio AI - React + Laravel Project Rules
+
+## Project Overview
+This is a mood tracking application built with React frontend and Laravel backend. The project follows a modular architecture with clear separation of concerns.
+
+## Tech Stack
+- **Frontend**: React 19, Vite, CSS (no Tailwind)
+- **Backend**: Laravel (PHP)
+- **Styling**: Custom CSS with CSS variables for theming
+- **Icons**: Font Awesome 6
+- **Build Tool**: Vite with Laravel Vite Plugin
+
+## File Structure & Organization
+
+### React Components
+- Components should be organized in feature-based directories
+- Each component should have its own directory with component file and styles
+- Use PascalCase for component names and files
+- Keep components small and focused on single responsibility
+
+```
+resources/js/components/
+├── feature-name/
+│   ├── ComponentName.jsx
+│   └── styles.css
+├── navigation/
+│   ├── Navigation.jsx
+│   └── styles.css
+└── mood/
+    ├── MoodSelector.jsx
+    └── styles.css
+```
+
+### CSS Organization
+- Each component should have its own CSS file
+- Use CSS variables for theming (light/dark mode support)
+- Follow BEM-like naming conventions
+- Keep styles modular and scoped to components
+
+### Laravel Backend
+- Follow Laravel conventions for models, controllers, routes
+- Use resource controllers where appropriate
+- Keep business logic in services when possible
+- Use Laravel's built-in validation
+
+## Coding Standards
+
+### React Components
+- Use functional components with hooks
+- Prefer destructuring for props
+- Use meaningful prop names
+- Keep components under 200 lines when possible
+- Use TypeScript-style prop documentation in comments
+
+### CSS Guidelines
+- Use CSS variables for colors and theming
+- Support both light and dark modes
+- Use semantic class names
+- Avoid deep nesting (max 3 levels)
+- Use flexbox and grid for layouts
+
+### JavaScript/React
+- Use ES6+ features (const, let, arrow functions, destructuring)
+- Prefer array methods (map, filter, reduce) over loops
+- Use meaningful variable and function names
+- Keep functions small and focused
+- Use early returns to reduce nesting
+
+## Component Architecture
+
+### Component Structure
+```jsx
+import React from 'react';
+import './styles.css';
+
+export default function ComponentName({ prop1, prop2 }) {
+    // State and hooks at the top
+    const [state, setState] = useState(null);
+    
+    // Event handlers
+    const handleClick = () => {
+        // Implementation
+    };
+    
+    // Render
+    return (
+        <div className="component-name">
+            {/* JSX */}
+        </div>
+    );
+}
+```
+
+### Props Pattern
+- Use destructuring for props
+- Provide default values when appropriate
+- Use prop validation or TypeScript-style comments
+- Keep props interface simple and focused
+
+## State Management
+- Use React hooks (useState, useEffect) for local state
+- Keep state as close to where it's used as possible
+- Lift state up only when necessary
+- Consider context for deeply nested state sharing
+
+## Styling Approach
+- Component-scoped CSS files
+- CSS variables for theming
+- Responsive design with mobile-first approach
+- Consistent spacing and typography scale
+- Accessibility considerations (focus states, contrast)
+
+## File Naming Conventions
+- Components: PascalCase (MoodSelector.jsx)
+- CSS files: kebab-case (styles.css)
+- Directories: kebab-case (mood/, navigation/)
+- Utilities: camelCase (formatDate.js)
+
+## Import/Export Patterns
+- Use named exports for utilities
+- Use default exports for components
+- Group imports: React, external libraries, internal components, styles
+- Use relative paths for internal imports
+
+## Error Handling
+- Use try-catch for async operations
+- Provide meaningful error messages
+- Handle loading states appropriately
+- Validate user input on both frontend and backend
+
+## Performance Considerations
+- Use React.memo for expensive components
+- Avoid unnecessary re-renders
+- Lazy load components when appropriate
+- Optimize images and assets
+
+## Testing Strategy
+- Write tests for critical user flows
+- Test component behavior, not implementation
+- Use meaningful test descriptions
+- Mock external dependencies
+
+## Git Workflow
+- Use descriptive commit messages
+- Create feature branches for new functionality
+- Keep commits atomic and focused
+- Use conventional commit format when possible
+
+## Documentation
+- Document complex business logic
+- Use JSDoc comments for functions
+- Keep README updated with setup instructions
+- Document API endpoints and data structures
+
+## Accessibility
+- Use semantic HTML elements
+- Provide alt text for images
+- Ensure keyboard navigation works
+- Maintain proper color contrast
+- Test with screen readers
+
+## Security
+- Validate all user input
+- Sanitize data before rendering
+- Use CSRF protection for forms
+- Implement proper authentication
+- Follow OWASP guidelines
+
+## Environment Configuration
+- Use environment variables for configuration
+- Keep sensitive data out of version control
+- Use different configs for development/production
+- Document required environment variables
+
+## Build & Deployment
+- Optimize for production builds
+- Use proper asset versioning
+- Implement caching strategies
+- Monitor performance metrics
+
+## Code Review Guidelines
+- Check for adherence to these rules
+- Ensure proper error handling
+- Verify accessibility compliance
+- Test functionality manually
+- Review for security concerns
+
+## Common Patterns
+
+### Form Handling
+```jsx
+const handleSubmit = (e) => {
+    e.preventDefault();
+    // Validation
+    if (!isValid) return;
+    // Submit logic
+};
+```
+
+### Conditional Rendering
+```jsx
+{condition && <Component />}
+{condition ? <ComponentA /> : <ComponentB />}
+```
+
+### List Rendering
+```jsx
+{items.map(item => (
+    <Component key={item.id} {...item} />
+))}
+```
+
+### Event Handling
+```jsx
+const handleClick = (id) => {
+    // Handler logic
+};
+
+<button onClick={() => handleClick(item.id)}>
+    Click me
+</button>
+```
+
+Remember: Keep it modular, keep it simple, and always consider the user experience first. 
